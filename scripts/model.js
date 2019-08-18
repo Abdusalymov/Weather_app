@@ -8,7 +8,7 @@ VK.init({
 
 const model = {
 
-    getForcast: (location = "Нытва") => {
+    getForcast: (location = "Москва") => {
        return axios
         .get(`https://api.weatherbit.io/v2.0/forecast/daily?city=${location}&key=abef6a52fd734768b8b45c46f4c9c46c&lang=ru&units=M&days=3`)
         .then(response => {
@@ -20,7 +20,7 @@ const model = {
         })
     },  
 
-    getCurrentWeather: (location = "Нытва") => {
+    getCurrentWeather: (location = "Москва") => {
        return axios
         .get(`https://api.weatherbit.io/v2.0/current?city=${location}&key=abef6a52fd734768b8b45c46f4c9c46c&lang=ru&units=M`)
         .then( response => response.data.data )
@@ -29,7 +29,7 @@ const model = {
         })
     },
 
-    getListCitys: (location="Нижн") => {
+    getListCitys: (location) => {
         VK.Api.call('database.getCities', {
                 country_id: 1, 
                 v:"5.101", 

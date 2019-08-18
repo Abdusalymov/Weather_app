@@ -155,7 +155,8 @@ var view = {
     document.querySelector(".cityName").value = "";
   },
   showCurrentWeather: function showCurrentWeather(data) {
-    this.city.innerHTML = data[0].city_name.toUpperCase();
+    var cityName = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "Москва";
+    this.city.innerHTML = cityName.toUpperCase();
     this.tempToday.innerHTML = Math.round(data[0].temp) + "&#176;";
     this.weatherType.innerHTML = data[0].weather.description;
   }
@@ -188,7 +189,7 @@ var controller = {
   },
   conveyCurrent: function conveyCurrent(location) {
     _model.default.getCurrentWeather(location).then(function (data) {
-      _view.default.showCurrentWeather(data);
+      _view.default.showCurrentWeather(data, location);
     });
   },
   conveyCitys: function conveyCitys(data) {
@@ -1934,7 +1935,7 @@ VK.init({
 });
 var model = {
   getForcast: function getForcast() {
-    var location = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "Нытва";
+    var location = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "Москва";
     return axios.get("https://api.weatherbit.io/v2.0/forecast/daily?city=".concat(location, "&key=abef6a52fd734768b8b45c46f4c9c46c&lang=ru&units=M&days=3")).then(function (response) {
       var newForecast = model.addRusWeekDay(response.data);
       return newForecast;
@@ -1943,17 +1944,16 @@ var model = {
     });
   },
   getCurrentWeather: function getCurrentWeather() {
-    var location = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "Нытва";
+    var location = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "Москва";
     return axios.get("https://api.weatherbit.io/v2.0/current?city=".concat(location, "&key=abef6a52fd734768b8b45c46f4c9c46c&lang=ru&units=M")).then(function (response) {
       return response.data.data;
     }).catch(function (error) {
       console.log(error);
     });
   },
-  getListCitys: function getListCitys() {
+  getListCitys: function getListCitys(location) {
     var _VK$Api$call;
 
-    var location = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "Нижн";
     VK.Api.call('database.getCities', (_VK$Api$call = {
       country_id: 1,
       v: "5.101",

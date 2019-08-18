@@ -55,8 +55,8 @@ const view = {
         document.querySelector(".cityName").value = "";
     },
 
-    showCurrentWeather: function(data){
-        this.city.innerHTML = data[0].city_name.toUpperCase();
+    showCurrentWeather: function(data, cityName="Москва"){
+        this.city.innerHTML = cityName.toUpperCase();
         this.tempToday.innerHTML = Math.round(data[0].temp) +"&#176;";
         this.weatherType.innerHTML = data[0].weather.description;
     }

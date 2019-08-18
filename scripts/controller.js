@@ -20,7 +20,7 @@ const controller = {
         model
         .getCurrentWeather(location)
         .then((data)=>{
-            view.showCurrentWeather(data);
+            view.showCurrentWeather(data, location);
         })
     },
 
