@@ -117,7 +117,90 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   }
 
   return newRequire;
-})({"node_modules/axios/lib/helpers/bind.js":[function(require,module,exports) {
+})({"scripts/view.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+var view = {
+  ul: document.getElementById("dayList"),
+  city: document.querySelector(".city"),
+  citysNames: document.querySelector(".citysNames"),
+  weatherType: document.querySelector(".weather_type"),
+  tempToday: document.querySelector(".tempToday"),
+  showForecast: function showForecast(forecast) {
+    for (var i = 0; i < this.ul.children.length; i++) {
+      this.ul.children[i].innerHTML = "\n                <span class=\"day\">\n                    ".concat(forecast[i].dayWeek, "\n                </span>\n\n                <div class=\"weather_icon\">\n                    <svg class=\"wi\">\n                        <use xlink:href=\"#").concat(forecast[i].weather.code, "\" />\n                    </svg>\n                </div>\n                \n                <span class=\"temperature\">\n                    ").concat(forecast[i].min_temp, "&#176;/").concat(forecast[i].max_temp, "&#176;\n                </span>\n\n                <span class=\"textWeather\">\n                    ").concat(forecast[i].weather.description, "\n                </span>\n            ");
+    }
+  },
+  showListCitys: function showListCitys(citys) {
+    this.citysNames.innerHTML = '';
+    var fragment = document.createDocumentFragment();
+    citys.forEach(function (item, index, citys) {
+      var li = document.createElement("li");
+      var span = document.createElement("span");
+      var text = document.createTextNode(item.title);
+      span.appendChild(text);
+      li.appendChild(span);
+      fragment.appendChild(li);
+    });
+    this.citysNames.style.display = "block";
+    this.citysNames.appendChild(fragment);
+    this.citysNames.style.display = "block";
+  },
+  hideListCitys: function hideListCitys() {
+    this.citysNames.style.display = "none";
+    document.querySelector(".cityName").value = "";
+  },
+  showCurrentWeather: function showCurrentWeather(data) {
+    this.city.innerHTML = data[0].city_name.toUpperCase();
+    this.tempToday.innerHTML = Math.round(data[0].temp) + "&#176;";
+    this.weatherType.innerHTML = data[0].weather.description;
+  }
+};
+var _default = view;
+exports.default = _default;
+},{}],"scripts/controller.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _model = _interopRequireDefault(require("./model"));
+
+var _view = _interopRequireDefault(require("./view"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var controller = {
+  init: function init(location) {
+    this.conveyForecast(location);
+    this.conveyCurrent(location);
+  },
+  conveyForecast: function conveyForecast(location) {
+    _model.default.getForcast(location).then(function (forecast) {
+      _view.default.showForecast(forecast);
+    });
+  },
+  conveyCurrent: function conveyCurrent(location) {
+    _model.default.getCurrentWeather(location).then(function (data) {
+      _view.default.showCurrentWeather(data);
+    });
+  },
+  conveyCitys: function conveyCitys(data) {
+    _view.default.showListCitys(data);
+  },
+  hideListCitys: function hideListCitys() {
+    _view.default.hideListCitys();
+  }
+};
+var _default = controller;
+exports.default = _default;
+},{"./model":"scripts/model.js","./view":"scripts/view.js"}],"node_modules/axios/lib/helpers/bind.js":[function(require,module,exports) {
 'use strict';
 
 module.exports = function bind(fn, thisArg) {
@@ -1842,39 +1925,44 @@ var _controller = _interopRequireDefault(require("./controller"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 var axios = require('axios');
 
+VK.init({
+  apiId: 6832878
+});
 var model = {
-  forecast: {},
-  current: {},
   getForcast: function getForcast() {
     var location = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "Нытва";
-    axios.get("https://api.weatherbit.io/v2.0/forecast/daily?city=".concat(location, "&key=abef6a52fd734768b8b45c46f4c9c46c&lang=ru&units=M&days=3")).then(function (response) {
+    return axios.get("https://api.weatherbit.io/v2.0/forecast/daily?city=".concat(location, "&key=abef6a52fd734768b8b45c46f4c9c46c&lang=ru&units=M&days=3")).then(function (response) {
       var newForecast = model.addRusWeekDay(response.data);
-      model.forecast = newForecast;
-      console.log(newForecast);
-
-      _controller.default.conveyForecat(newForecast, response.data);
+      return newForecast;
     }).catch(function (error) {
       console.log(error);
     });
   },
   getCurrentWeather: function getCurrentWeather() {
     var location = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "Нытва";
-    axios.get("https://api.weatherbit.io/v2.0/current?city=".concat(location, "&key=abef6a52fd734768b8b45c46f4c9c46c&lang=ru&units=M")).then(function (response) {
-      console.log(response);
-      model.current = response.data.data;
-
-      _controller.default.conveyCurrent(response.data.data);
+    return axios.get("https://api.weatherbit.io/v2.0/current?city=".concat(location, "&key=abef6a52fd734768b8b45c46f4c9c46c&lang=ru&units=M")).then(function (response) {
+      return response.data.data;
     }).catch(function (error) {
       console.log(error);
     });
   },
-  giveForecast: function giveForecast() {
-    return this.forecast;
-  },
-  giveCurrentWeather: function giveCurrentWeather() {
-    return this.current;
+  getListCitys: function getListCitys() {
+    var _VK$Api$call;
+
+    var location = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "Нижн";
+    VK.Api.call('database.getCities', (_VK$Api$call = {
+      country_id: 1,
+      v: "5.101",
+      q: location
+    }, _defineProperty(_VK$Api$call, "v", "5.73"), _defineProperty(_VK$Api$call, "pneed_all", 0), _defineProperty(_VK$Api$call, "count", 5), _defineProperty(_VK$Api$call, "access_token", "bca95bceccbc09146cc39c8c9ef7eefd0f254f1de13a86bfc7c47808c104f519e73e1e8a3c97a4d81ce9b"), _VK$Api$call), function (r) {
+      if (r.response) {
+        _controller.default.conveyCitys(r.response.items);
+      }
+    });
   },
   addRusWeekDay: function addRusWeekDay(forecast) {
     var newForecast = [];
@@ -1893,66 +1981,10 @@ var model = {
 };
 var _default = model;
 exports.default = _default;
-},{"./controller":"scripts/controller.js","axios":"node_modules/axios/index.js"}],"scripts/view.js":[function(require,module,exports) {
+},{"./controller":"scripts/controller.js","axios":"node_modules/axios/index.js"}],"index.js":[function(require,module,exports) {
 "use strict";
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-var view = {
-  ul: document.getElementById("dayList"),
-  city: document.querySelector(".city"),
-  weatherType: document.querySelector(".weather_type"),
-  tempToday: document.querySelector(".tempToday"),
-  showForecast: function showForecast(forecast, data) {
-    for (var i = 0; i < this.ul.children.length; i++) {
-      this.ul.children[i].innerHTML = "\n                <span class=\"day\">\n                    ".concat(forecast[i].dayWeek, "\n                </span>\n\n                <div class=\"weather_icon\">\n                    <svg class=\"wi\">\n                        <use xlink:href=\"#").concat(forecast[i].weather.code, "\" />\n                    </svg>\n                </div>\n                \n                <span class=\"temperature\">\n                    ").concat(forecast[i].min_temp, "&#176;/").concat(forecast[i].max_temp, "&#176;\n                </span>\n\n                <span class=\"textWeather\">\n                    ").concat(forecast[i].weather.description, "\n                </span>\n            ");
-    }
-  },
-  showCurrentWeather: function showCurrentWeather(data) {
-    this.city.innerHTML = data[0].city_name;
-    this.tempToday.innerHTML = Math.round(data[0].temp) + "&#176;";
-    this.weatherType.innerHTML = data[0].weather.description;
-  }
-};
-var _default = view;
-exports.default = _default;
-},{}],"scripts/controller.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _model = _interopRequireDefault(require("./model"));
-
-var _view = _interopRequireDefault(require("./view"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var controller = {
-  init: function init(location) {
-    _model.default.getForcast(location);
-
-    _model.default.getCurrentWeather(location);
-  },
-  conveyForecat: function conveyForecat(forecast, data) {
-    console.log(forecast);
-
-    _view.default.showForecast(forecast, data);
-  },
-  conveyCurrent: function conveyCurrent(data) {
-    console.log(data);
-
-    _view.default.showCurrentWeather(data);
-  }
-};
-var _default = controller;
-exports.default = _default;
-},{"./model":"scripts/model.js","./view":"scripts/view.js"}],"index.js":[function(require,module,exports) {
-"use strict";
+var _model = _interopRequireDefault(require("./scripts/model"));
 
 var _controller = _interopRequireDefault(require("./scripts/controller"));
 
@@ -1960,12 +1992,17 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 _controller.default.init();
 
-document.querySelector(".btn").addEventListener("click", function (event) {
-  console.log(event.target.form[0].value);
-
-  _controller.default.init(event.target.form[0].value);
+document.querySelector(".cityName").addEventListener("input", function (event) {
+  if (event.target.form[0].value.length >= 2) {
+    _model.default.getListCitys(event.target.form[0].value);
+  }
 });
-},{"./scripts/controller":"scripts/controller.js"}],"../Users/irbis/AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+document.querySelector(".citysNames").addEventListener("click", function () {
+  _controller.default.init(event.target.textContent);
+
+  _controller.default.hideListCitys();
+});
+},{"./scripts/model":"scripts/model.js","./scripts/controller":"scripts/controller.js"}],"../Users/irbis/AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -1993,7 +2030,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49274" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53348" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

@@ -2,19 +2,34 @@ import model from "./model";
 import view from "./view";
 
 let controller = {
-    init: function(location){
-        model.getForcast(location);
-        model.getCurrentWeather(location);
+
+    init: function (location) {
+        this.conveyForecast(location);
+        this.conveyCurrent(location);
     },
 
-    conveyForecat: function(forecast, data){
-        console.log(forecast);
-        view.showForecast(forecast, data);
+    conveyForecast: location => {
+        model
+        .getForcast(location)
+        .then(forecast => {
+            view.showForecast(forecast);
+        })
     },
 
-    conveyCurrent: function(data){
-        console.log(data);
-        view.showCurrentWeather(data);
+    conveyCurrent: location =>{
+        model
+        .getCurrentWeather(location)
+        .then((data)=>{
+            view.showCurrentWeather(data);
+        })
+    },
+
+    conveyCitys: data => {
+        view.showListCitys(data);
+    },
+
+    hideListCitys: () =>{
+        view.hideListCitys();
     }
 };
 

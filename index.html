@@ -3,6 +3,7 @@
     <head>
         <link href="main.css" rel="stylesheet">
         <link href="media\weather-icons.min.css" rel="stylesheet">
+        <script src="https://vk.com/js/api/openapi.js?162" type="text/javascript"></script>
     </head>
     <body>
         <div style="display: none">
@@ -154,15 +155,15 @@
         
         <div class="search_box">
             <form>
-                <input class="cityText" type="text">
-                <input class="btn" type="button" value="Найти">
+                <input class="cityName" type="text">
             </form>
+            <ul class="citysNames" style="display: none;"></ul>
         </div>
 
         <div class="weather_box">
             <div class="weather_today">
                 <h1 class="city"></h1>
-                <span class="dayToday">today</span>
+                <span class="dayToday">сегодня</span>
                 <span class="tempToday"></span>
                 <span class="weather_type"></span>
             </div>
@@ -177,5 +178,6 @@
         </div>
 
         <script src="./index.js"></script>
+        </script>
     </body>
 </html>

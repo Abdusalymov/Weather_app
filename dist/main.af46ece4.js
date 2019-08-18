@@ -189,7 +189,7 @@ var reloadCSS = require('_css_loader');
 
 module.hot.dispose(reloadCSS);
 module.hot.accept(reloadCSS);
-},{"_css_loader":"../Users/irbis/AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/css-loader.js"}],"../Users/irbis/AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"./fonts\\OpenSans-ExtraBold.ttf":[["OpenSans-ExtraBold.716560ac.ttf","fonts/OpenSans-ExtraBold.ttf"],"fonts/OpenSans-ExtraBold.ttf"],"./fonts\\OpenSans-Light.ttf":[["OpenSans-Light.8e8a69fc.ttf","fonts/OpenSans-Light.ttf"],"fonts/OpenSans-Light.ttf"],"./fonts\\OpenSans-Regular.ttf":[["OpenSans-Regular.4f32e784.ttf","fonts/OpenSans-Regular.ttf"],"fonts/OpenSans-Regular.ttf"],"./fonts\\OpenSans-SemiBold.ttf":[["OpenSans-SemiBold.492874b3.ttf","fonts/OpenSans-SemiBold.ttf"],"fonts/OpenSans-SemiBold.ttf"],"_css_loader":"../Users/irbis/AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/css-loader.js"}],"../Users/irbis/AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -217,7 +217,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49274" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53348" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
