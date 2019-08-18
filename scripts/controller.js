@@ -1,7 +1,7 @@
 import model from "./model";
 import view from "./view";
 
-let controller = {
+const controller = {
 
     init: function (location) {
         this.conveyForecast(location);

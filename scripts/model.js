@@ -6,13 +6,13 @@ VK.init({
     apiId: 6832878
 });
 
-let model = {
+const model = {
 
     getForcast: (location = "Нытва") => {
        return axios
         .get(`https://api.weatherbit.io/v2.0/forecast/daily?city=${location}&key=abef6a52fd734768b8b45c46f4c9c46c&lang=ru&units=M&days=3`)
         .then(response => {
-            let newForecast = model.addRusWeekDay(response.data);
+            const newForecast = model.addRusWeekDay(response.data);
             return newForecast;
         })
         .catch(error => {
@@ -49,7 +49,7 @@ let model = {
 
     addRusWeekDay: forecast => {
 
-        let newForecast = [];
+        const newForecast = [];
         for(let i = 0; i < forecast.data.length; i++){
             newForecast[i] = forecast.data[i];
             newForecast[i].dayWeek = new Date(forecast.data[i].datetime).toLocaleString('ru', {

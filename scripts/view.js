@@ -1,4 +1,4 @@
-let view = {
+const view = {
 
     ul: document.getElementById("dayList"),
 
@@ -36,12 +36,12 @@ let view = {
 
     showListCitys: function(citys){
         this.citysNames.innerHTML = '';
-        let fragment = document.createDocumentFragment();
+        const fragment = document.createDocumentFragment();
         
         citys.forEach(function(item, index, citys) {
-            let li = document.createElement("li");
-            let span = document.createElement("span");
-            let text = document.createTextNode(item.title);
+            const li = document.createElement("li");
+            const span = document.createElement("span");
+            const text = document.createTextNode(item.title);
             span.appendChild(text);
             li.appendChild(span)
             fragment.appendChild(li);
@@ -60,8 +60,6 @@ let view = {
         this.tempToday.innerHTML = Math.round(data[0].temp) +"&#176;";
         this.weatherType.innerHTML = data[0].weather.description;
     }
-
-    
 };
 
 export default view;
