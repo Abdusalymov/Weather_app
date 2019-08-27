@@ -59,6 +59,10 @@ const view = {
         this.city.innerHTML = cityName.toUpperCase();
         this.tempToday.innerHTML = Math.round(data[0].temp) +"&#176;";
         this.weatherType.innerHTML = data[0].weather.description;
+    },
+
+    closeOpenMobileBox: function(stateBox){
+        document.querySelector(".search_box_mobile").style.display = stateBox ? "block" : "none";
     }
 };
 

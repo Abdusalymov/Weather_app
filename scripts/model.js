@@ -1,12 +1,13 @@
 import controller from "./controller";
 const axios = require('axios');
 
-
 VK.init({
     apiId: 6832878
 });
 
 const model = {
+
+    toggleMobileBox: false,
 
     getForcast: (location = "Москва") => {
        return axios
@@ -59,6 +60,9 @@ const model = {
             newForecast[i].min_temp = Math.round(forecast.data[i].min_temp);
         }
         return newForecast;
+    },
+    changeMobileBox: function(){
+       return this.toggleMobileBox = !this.toggleMobileBox;
     }
 };
 export default model;

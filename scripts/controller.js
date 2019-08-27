@@ -8,7 +8,7 @@ const controller = {
         this.conveyCurrent(location);
     },
 
-    conveyForecast: location => {
+    conveyForecast: (location) => {
         model
         .getForcast(location)
         .then(forecast => {
@@ -16,7 +16,7 @@ const controller = {
         })
     },
 
-    conveyCurrent: location =>{
+    conveyCurrent: (location) =>{
         model
         .getCurrentWeather(location)
         .then((data)=>{
@@ -30,6 +30,11 @@ const controller = {
 
     hideListCitys: () =>{
         view.hideListCitys();
+    },
+
+    toggleMobileSearchBox: () =>{
+        let toggleState = model.changeMobileBox();
+        view.closeOpenMobileBox(toggleState);
     }
 };
 

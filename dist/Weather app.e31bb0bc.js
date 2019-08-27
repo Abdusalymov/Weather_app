@@ -159,6 +159,9 @@ var view = {
     this.city.innerHTML = cityName.toUpperCase();
     this.tempToday.innerHTML = Math.round(data[0].temp) + "&#176;";
     this.weatherType.innerHTML = data[0].weather.description;
+  },
+  closeOpenMobileBox: function closeOpenMobileBox(stateBox) {
+    document.querySelector(".search_box_mobile").style.display = stateBox ? "block" : "none";
   }
 };
 var _default = view;
@@ -197,6 +200,11 @@ var controller = {
   },
   hideListCitys: function hideListCitys() {
     _view.default.hideListCitys();
+  },
+  toggleMobileSearchBox: function toggleMobileSearchBox() {
+    var toggleState = _model.default.changeMobileBox();
+
+    _view.default.closeOpenMobileBox(toggleState);
   }
 };
 var _default = controller;
@@ -1934,6 +1942,7 @@ VK.init({
   apiId: 6832878
 });
 var model = {
+  toggleMobileBox: false,
   getForcast: function getForcast() {
     var location = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "Москва";
     return axios.get("https://api.weatherbit.io/v2.0/forecast/daily?city=".concat(location, "&key=abef6a52fd734768b8b45c46f4c9c46c&lang=ru&units=M&days=3")).then(function (response) {
@@ -1977,6 +1986,9 @@ var model = {
     }
 
     return newForecast;
+  },
+  changeMobileBox: function changeMobileBox() {
+    return this.toggleMobileBox = !this.toggleMobileBox;
   }
 };
 var _default = model;
@@ -1990,17 +2002,29 @@ var _controller = _interopRequireDefault(require("./scripts/controller"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-_controller.default.init();
+_controller.default.init(); //get name location from input
 
-document.querySelector(".cityName").addEventListener("input", function (event) {
-  if (event.target.form[0].value.length >= 2) {
-    _model.default.getListCitys(event.target.form[0].value);
+
+document.querySelector('body').addEventListener('input', function (_ref) {
+  var target = _ref.target;
+
+  if (target.className === 'cityName' || target.className === 'cityName_mobile' && target.form[0].value.length >= 2) {
+    _model.default.getListCitys(target.form[0].value);
   }
-});
+}); //select a city from the drop-down list on click
+
 document.querySelector(".citysNames").addEventListener("click", function () {
   _controller.default.init(event.target.textContent);
 
   _controller.default.hideListCitys();
+}); //open/close side mobile menu on click
+
+document.querySelector('body').addEventListener('click', function (_ref2) {
+  var target = _ref2.target;
+
+  if (target.className.baseVal === "search_icon" || target.className.baseVal === "close_icon") {
+    _controller.default.toggleMobileSearchBox();
+  }
 });
 },{"./scripts/model":"scripts/model.js","./scripts/controller":"scripts/controller.js"}],"../Users/irbis/AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
@@ -2030,7 +2054,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55162" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53600" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

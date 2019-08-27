@@ -15,15 +15,21 @@
     src: url(fonts/OpenSans-SemiBold.ttf) format("truetype"); 
 }
 
+
+
 :root{
-    font-size: 60px;
+    font-size: 1.5em;
 }
+
+
+
 
 body{
     display: flex;
     flex-direction: column;
     justify-content: center;
     background-color: #0d1e57;
+    margin: 0;
 }
 /* 
 .wi{
@@ -135,14 +141,11 @@ input[type="text"] {
     width: 95%;
     align-items: center;
 }
-.forecast {
-    width: 100%;
-}
 .weather_today{
     display: flex;
     flex-direction: column;
-    /* width: 50%;
-    height: 200px; */
+    align-items: center;
+    width: 100%
 }
 .dayToday{
     font: 0.875rem "OpenSans-Regular", sans-serif;
@@ -165,16 +168,10 @@ input[type="text"] {
 
 .forecast{
     width: 100%;
-    display: flex;
-    justify-content: center;
 }
 
 #dayList{
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
     padding-left: 0;
-    width: 100%;
     list-style-type: none;
     color: #fff;
 }
@@ -182,11 +179,15 @@ input[type="text"] {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 100%;
-    height: 570px;
-    margin-bottom: 50px;
-    padding-top: 30px;
+    margin-bottom: 25px;
+    padding: 25px 0;
     background-color: rgba(255, 255, 255, 0.11);
+}
+.temperature{
+    font: 1.3rem "OpenSans-Light", sans-serif;
+}
+.textWeather{
+    font: 0.875rem "OpenSans-Regular", sans-serif;
 }
 .day{
     font: 0.875rem "OpenSans-Regular", sans-serif;
@@ -194,6 +195,138 @@ input[type="text"] {
 }
 .wi{
     fill: white;
-    width: 300px;
-    height: 300px;
+    width: 150px;
+    height: 150px;
+}
+.search_box{
+    display: none;
+}
+.search_box_mobile{
+    display: flex;
+    justify-content: flex-end;
+}
+.locations_search_box{
+    width: 100%;
+    background-color: #1335a8;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    margin: 0;
+    z-index: 1000;
+}
+.city_weather{
+    padding-left: 0;
+    margin: 0 auto;
+    list-style-type: none;
+    font: 1.5rem "OpenSans-Regular", sans-serif;
+    color: #fff;
+    width: 95%;
+}
+.city_weather > li{
+    border-bottom: 1px solid #fff;
+    padding: 0.5em;
+}
+.city_weather > li:hover{
+    background-color: rgba(250, 145, 32, .5);
+}
+.cityName_mobile{
+    width: 100%;
+    height: 50px;
+    font-size: 1rem;
+    padding-left: 0.5em;
+}
+.close_icon_container,
+.search_icon_container{
+    margin: 15px 0;
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+}
+.close_icon,
+.search_icon{
+    width: 30px;
+    height: 30px;
+    fill: #fff;
+    margin-right: 20px;
+    cursor: pointer;
+}
+
+@media (min-width: 800px){
+    :root{
+        font-size: 1em;
+    }
+    .wi{
+        fill: white;
+        width: 100px;
+        height: 100px;
+    }
+    .weather_box {
+        display: flex;
+        flex-direction: row; 
+        margin: auto;
+        width: 95%;
+        height: 100vh;
+        max-width: 800px;
+        align-items: center;
+        position: relative;
+    }
+    .search_icon_container {
+        display: none;
+    }
+    .search_box {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        position: absolute;
+        top: 25px;
+        right: 0;
+    }
+    .citysNames{
+        position: relative;
+        background: #fff;
+        list-style-type: none;
+        padding-left: 0;
+    }
+    .citysNames li{
+        list-style-type: none;
+        cursor: pointer;
+    }
+    .citysNames li span{
+        margin: 0 10px;
+    }
+    .citysNames li:hover{
+        background-color: rgba(250, 145, 32, .5); 
+    } 
+    #dayList{
+        display: flex;
+        justify-content: space-around;
+    }
+    input[type="text"] {
+        padding: 2px;
+        border: none;
+        width: 200px;
+        height: 20px;
+    }
+    .weather_today{
+        flex-shrink: 3;
+        align-items: end;
+    }
+    .days{
+        width: 30%;
+        align-items: end;
+        padding-left: 15px;
+        box-sizing: border-box;
+    }
+    .day{
+        margin-left: 0;
+    }
+    .temperature {
+        font-size: 1.9rem;
+    }
+    .weather_icon{
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
 }
