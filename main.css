@@ -117,20 +117,20 @@ input[type="text"] {
     border: none;
 }
 
-.citysNames{
+.citysNamesList{
     margin-top: 0;
     padding-left: 0;
     background-color: #fff;
     Width: 50%;
 }
-.citysNames li{
+.citysNamesList li{
     list-style-type: none;
     cursor: pointer;
 }
-.citysNames li span{
+.citysNamesList li span{
     margin-left: 10px;
 }
-.citysNames li:hover{
+.citysNamesList li:hover{
     background-color: rgba(250, 145, 32, .5); 
 } */
 
@@ -282,20 +282,20 @@ input[type="text"] {
         top: 25px;
         right: 0;
     }
-    .citysNames{
+    .citysNamesList{
         position: relative;
         background: #fff;
         list-style-type: none;
         padding-left: 0;
     }
-    .citysNames li{
+    .citysNamesList li{
         list-style-type: none;
         cursor: pointer;
     }
-    .citysNames li span{
+    .citysNamesList li span{
         margin: 0 10px;
     }
-    .citysNames li:hover{
+    .citysNamesList li:hover{
         background-color: rgba(250, 145, 32, .5); 
     } 
     #dayList{

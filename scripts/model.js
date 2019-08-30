@@ -9,7 +9,7 @@ const model = {
 
     toggleMobileBox: false,
 
-    getForcast: (location = "Москва") => {
+    getForcastWeather: (location = "Москва") => {
        return axios
         .get(`https://api.weatherbit.io/v2.0/forecast/daily?city=${location}&key=abef6a52fd734768b8b45c46f4c9c46c&lang=ru&units=M&days=3`)
         .then(response => {
@@ -23,18 +23,18 @@ const model = {
 
     getCurrentWeather: (location = "Москва") => {
        return axios
-        .get(`https://api.weatherbit.io/v2.0/current?city=${location}&key=abef6a52fd734768b8b45c46f4c9c46c&lang=ru&units=M`)
-        .then( response => response.data.data )
+        .get(`http://api.openweathermap.org/data/2.5/weather?q=${location}&units=metric&APPID=8da38032d70cd64f1f7c17976c2dd291&lang=ru`)
+        .then( response => response.data )
         .catch(error => {
             console.log(error);
         })
     },
 
-    getListCitys: (location) => {
+    getListCitys: (firstLettersLocation) => {
         VK.Api.call('database.getCities', {
                 country_id: 1, 
                 v:"5.101", 
-                q: location, 
+                q: firstLettersLocation, 
                 v:"5.73", 
                 pneed_all: 0, 
                 count:5, 

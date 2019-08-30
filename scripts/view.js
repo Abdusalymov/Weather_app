@@ -4,7 +4,7 @@ const view = {
 
     city: document.querySelector(".city"),
 
-    citysNames: document.querySelector(".citysNames"),
+    citysNamesList: document.querySelector(".citysNamesList"),
 
     weatherType: document.querySelector(".weather_type"),
 
@@ -35,7 +35,7 @@ const view = {
     },
 
     showListCitys: function(citys){
-        this.citysNames.innerHTML = '';
+        this.citysNamesList.innerHTML = '';
         const fragment = document.createDocumentFragment();
         
         citys.forEach(function(item, index, citys) {
@@ -45,20 +45,20 @@ const view = {
             span.appendChild(text);
             li.appendChild(span)
             fragment.appendChild(li);
-        });this.citysNames.style.display = "block";
-        this.citysNames.appendChild(fragment);
-        this.citysNames.style.display = "block";
+        });this.citysNamesList.style.display = "block";
+        this.citysNamesList.appendChild(fragment);
+        this.citysNamesList.style.display = "block";
     },
 
     hideListCitys: function(){
-        this.citysNames.style.display = "none";
+        this.citysNamesList.style.display = "none";
         document.querySelector(".cityName").value = "";
     },
 
-    showCurrentWeather: function(data, cityName="Москва"){
+    showCurrentWeather: function({main, weather}, cityName="Москва"){
         this.city.innerHTML = cityName.toUpperCase();
-        this.tempToday.innerHTML = Math.round(data[0].temp) +"&#176;";
-        this.weatherType.innerHTML = data[0].weather.description;
+        this.tempToday.innerHTML = Math.round(main.temp) +"&#176;";
+        this.weatherType.innerHTML = weather[0].description;
     },
 
     closeOpenMobileBox: function(stateBox){

@@ -127,7 +127,7 @@ exports.default = void 0;
 var view = {
   ul: document.getElementById("dayList"),
   city: document.querySelector(".city"),
-  citysNames: document.querySelector(".citysNames"),
+  citysNamesList: document.querySelector(".citysNamesList"),
   weatherType: document.querySelector(".weather_type"),
   tempToday: document.querySelector(".tempToday"),
   showForecast: function showForecast(forecast) {
@@ -136,7 +136,7 @@ var view = {
     }
   },
   showListCitys: function showListCitys(citys) {
-    this.citysNames.innerHTML = '';
+    this.citysNamesList.innerHTML = '';
     var fragment = document.createDocumentFragment();
     citys.forEach(function (item, index, citys) {
       var li = document.createElement("li");
@@ -146,19 +146,21 @@ var view = {
       li.appendChild(span);
       fragment.appendChild(li);
     });
-    this.citysNames.style.display = "block";
-    this.citysNames.appendChild(fragment);
-    this.citysNames.style.display = "block";
+    this.citysNamesList.style.display = "block";
+    this.citysNamesList.appendChild(fragment);
+    this.citysNamesList.style.display = "block";
   },
   hideListCitys: function hideListCitys() {
-    this.citysNames.style.display = "none";
+    this.citysNamesList.style.display = "none";
     document.querySelector(".cityName").value = "";
   },
-  showCurrentWeather: function showCurrentWeather(data) {
+  showCurrentWeather: function showCurrentWeather(_ref) {
+    var main = _ref.main,
+        weather = _ref.weather;
     var cityName = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "Москва";
     this.city.innerHTML = cityName.toUpperCase();
-    this.tempToday.innerHTML = Math.round(data[0].temp) + "&#176;";
-    this.weatherType.innerHTML = data[0].weather.description;
+    this.tempToday.innerHTML = Math.round(main.temp) + "&#176;";
+    this.weatherType.innerHTML = weather[0].description;
   },
   closeOpenMobileBox: function closeOpenMobileBox(stateBox) {
     document.querySelector(".search_box_mobile").style.display = stateBox ? "block" : "none";
@@ -181,16 +183,16 @@ var _view = _interopRequireDefault(require("./view"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var controller = {
-  init: function init(location) {
-    this.conveyForecast(location);
-    this.conveyCurrent(location);
+  init: function init(locationName) {
+    this.callApiForecastWeather(locationName);
+    this.callApiCurrentWeather(locationName);
   },
-  conveyForecast: function conveyForecast(location) {
-    _model.default.getForcast(location).then(function (forecast) {
+  callApiForecastWeather: function callApiForecastWeather(location) {
+    _model.default.getForcastWeather(location).then(function (forecast) {
       _view.default.showForecast(forecast);
     });
   },
-  conveyCurrent: function conveyCurrent(location) {
+  callApiCurrentWeather: function callApiCurrentWeather(location) {
     _model.default.getCurrentWeather(location).then(function (data) {
       _view.default.showCurrentWeather(data, location);
     });
@@ -1943,7 +1945,7 @@ VK.init({
 });
 var model = {
   toggleMobileBox: false,
-  getForcast: function getForcast() {
+  getForcastWeather: function getForcastWeather() {
     var location = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "Москва";
     return axios.get("https://api.weatherbit.io/v2.0/forecast/daily?city=".concat(location, "&key=abef6a52fd734768b8b45c46f4c9c46c&lang=ru&units=M&days=3")).then(function (response) {
       var newForecast = model.addRusWeekDay(response.data);
@@ -1954,19 +1956,19 @@ var model = {
   },
   getCurrentWeather: function getCurrentWeather() {
     var location = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "Москва";
-    return axios.get("https://api.weatherbit.io/v2.0/current?city=".concat(location, "&key=abef6a52fd734768b8b45c46f4c9c46c&lang=ru&units=M")).then(function (response) {
-      return response.data.data;
+    return axios.get("http://api.openweathermap.org/data/2.5/weather?q=".concat(location, "&units=metric&APPID=8da38032d70cd64f1f7c17976c2dd291&lang=ru")).then(function (response) {
+      return response.data;
     }).catch(function (error) {
       console.log(error);
     });
   },
-  getListCitys: function getListCitys(location) {
+  getListCitys: function getListCitys(firstLettersLocation) {
     var _VK$Api$call;
 
     VK.Api.call('database.getCities', (_VK$Api$call = {
       country_id: 1,
       v: "5.101",
-      q: location
+      q: firstLettersLocation
     }, _defineProperty(_VK$Api$call, "v", "5.73"), _defineProperty(_VK$Api$call, "pneed_all", 0), _defineProperty(_VK$Api$call, "count", 5), _defineProperty(_VK$Api$call, "access_token", "bca95bceccbc09146cc39c8c9ef7eefd0f254f1de13a86bfc7c47808c104f519e73e1e8a3c97a4d81ce9b"), _VK$Api$call), function (r) {
       if (r.response) {
         _controller.default.conveyCitys(r.response.items);
@@ -2002,31 +2004,46 @@ var _controller = _interopRequireDefault(require("./scripts/controller"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+var axios = require('axios');
+
+var body = document.querySelector('body');
+var citysNamesList = document.querySelector('.citysNamesList');
+
 _controller.default.init(); //get name location from input
 
 
-document.querySelector('body').addEventListener('input', function (_ref) {
+body.addEventListener('input', function (_ref) {
   var target = _ref.target;
+  var inputClassName = target.className;
+  var firstLettersNameLocation = target.form[0].value;
 
-  if (target.className === 'cityName' || target.className === 'cityName_mobile' && target.form[0].value.length >= 2) {
-    _model.default.getListCitys(target.form[0].value);
+  if (inputClassName === 'cityName' || inputClassName === 'cityName_mobile' && firstLettersNameLocation.length >= 2) {
+    _model.default.getListCitys(firstLettersNameLocation);
   }
-}); //select a city from the drop-down list on click
-
-document.querySelector(".citysNames").addEventListener("click", function () {
-  _controller.default.init(event.target.textContent);
-
-  _controller.default.hideListCitys();
 }); //open/close side mobile menu on click
 
-document.querySelector('body').addEventListener('click', function (_ref2) {
+body.addEventListener('click', function (_ref2) {
   var target = _ref2.target;
 
   if (target.className.baseVal === "search_icon" || target.className.baseVal === "close_icon") {
     _controller.default.toggleMobileSearchBox();
   }
-});
-},{"./scripts/model":"scripts/model.js","./scripts/controller":"scripts/controller.js"}],"../Users/irbis/AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+}); //select a city from the drop-down list on click
+
+citysNamesList.addEventListener("click", function (_ref3) {
+  var target = _ref3.target;
+  var locationName = target.textContent;
+
+  _controller.default.init(locationName);
+
+  _controller.default.hideListCitys();
+}); // axios
+// .get(`http://api.openweathermap.org/data/2.5/weather?q=москва&units=metric&APPID=8da38032d70cd64f1f7c17976c2dd291&lang=ru`)
+// .then( response =>{console.log(response)} )
+// .catch(error => {
+//     console.log(error);
+// })
+},{"./scripts/model":"scripts/model.js","./scripts/controller":"scripts/controller.js","axios":"node_modules/axios/index.js"}],"../Users/irbis/AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -2054,7 +2071,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53600" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61661" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

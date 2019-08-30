@@ -3,20 +3,20 @@ import view from "./view";
 
 const controller = {
 
-    init: function (location) {
-        this.conveyForecast(location);
-        this.conveyCurrent(location);
+    init: function (locationName) {
+        this.callApiForecastWeather(locationName);
+        this.callApiCurrentWeather(locationName);
     },
 
-    conveyForecast: (location) => {
+    callApiForecastWeather: (location) => {
         model
-        .getForcast(location)
+        .getForcastWeather(location)
         .then(forecast => {
             view.showForecast(forecast);
         })
     },
 
-    conveyCurrent: (location) =>{
+    callApiCurrentWeather: (location) =>{
         model
         .getCurrentWeather(location)
         .then((data)=>{
