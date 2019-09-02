@@ -30,12 +30,3 @@ citysNamesList.addEventListener("click", ({ target })=>{
     controller.init(locationName);
     controller.hideListCitys();
 });
-
-
-
-// axios
-// .get(`http://api.openweathermap.org/data/2.5/weather?q=москва&units=metric&APPID=8da38032d70cd64f1f7c17976c2dd291&lang=ru`)
-// .then( response =>{console.log(response)} )
-// .catch(error => {
-//     console.log(error);
-// })
