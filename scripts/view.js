@@ -45,7 +45,8 @@ const view = {
             span.appendChild(text);
             li.appendChild(span)
             fragment.appendChild(li);
-        });this.citysNamesList.style.display = "block";
+        });
+        
         this.citysNamesList.appendChild(fragment);
         this.citysNamesList.style.display = "block";
     },
@@ -63,6 +64,23 @@ const view = {
 
     closeOpenMobileBox: function(stateBox){
         document.querySelector(".search_box_mobile").style.display = stateBox ? "block" : "none";
+    },
+    mobileWeatherLocations: (weather) => {
+        const city_weather = document.querySelector(".city_weather");
+
+        weather.forEach((item, index, weather) => {
+            const li = document.createElement("li");
+            const temperature = Math.round(weather[index].main.temp);
+            const iconID = weather[index].weather[0].id;
+            const locationName = weather[index].name;
+
+            li.innerHTML = `
+                <span class="locationsName_mobile">${locationName}</span> 
+                <i class="wi wi-owm-${iconID}"></i>
+                <span>${temperature}</span> 
+            `
+            city_weather.appendChild(li);  
+        });
     }
 };
 

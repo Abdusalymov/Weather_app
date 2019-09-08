@@ -6,6 +6,7 @@ const controller = {
     init: function (locationName) {
         this.callApiForecastWeather(locationName);
         this.callApiCurrentWeather(locationName);
+        this.showCurrentWeatherSeveralLocation();
     },
 
     callApiForecastWeather: (location) => {
@@ -35,7 +36,14 @@ const controller = {
     toggleMobileSearchBox: () =>{
         let toggleState = model.changeMobileBox();
         view.closeOpenMobileBox(toggleState);
+    },
+
+    showCurrentWeatherSeveralLocation: () => {
+        model
+        .getCurrentWeatherSeveralLocations()
+        .then(CurrentWeatherLocations => {
+            view.mobileWeatherLocations(CurrentWeatherLocations);
+        })
     }
 };
-
 export default controller;

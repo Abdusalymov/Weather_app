@@ -15,14 +15,9 @@
     src: url(fonts/OpenSans-SemiBold.ttf) format("truetype"); 
 }
 
-
-
 :root{
     font-size: 1.5em;
 }
-
-
-
 
 body{
     display: flex;
@@ -31,108 +26,6 @@ body{
     background-color: #0d1e57;
     margin: 0;
 }
-/* 
-.wi{
-    fill: white;
-    width: 100px;
-    height: 100px;
-}
-img{
-    width: 80px;
-    height: 80px;
-}
-.weather_box{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    width: 100%;
-    max-width: 800px;
-}
-
-.weather_today{
-    display: flex;
-    flex-direction: column;
-    width: 50%;
-    height: 200px;
-}
-.city {
-    font: 1.5rem "OpenSans-ExtraBold", sans-serif;
-    color: #fff;
-    margin-bottom: 0;
-}
-
- .forecast{
-    width: 100%;
-    display: flex;
-    justify-content: center;
-}
-
-#dayList{
-    display: flex;
-    justify-content: space-between;
-    padding-left: 0;
-    width: 100%;
-    list-style-type: none;
-    color: #fff;
-}
-.days{
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    width: 30%;
-    height: 200px;
-    background-color: rgba(255, 255, 255, 0.11);
-}
-.day{
-    font: 0.875rem "OpenSans-Regular", sans-serif;
-    margin-left: 10px;
-}
-.dayToday{
-    font: 0.875rem "OpenSans-Regular", sans-serif;
-    color: #fff;
-}
-.tempToday{
-    font: 5rem "OpenSans-Regular", sans-serif;
-    color: #fff;
-}
-.weather_type{
-    font: 1.125rem "OpenSans-SemiBold", sans-serif;
-    color: #fff;
-}
-.temperature{
-    font: 1.875rem "OpenSans-Light", sans-serif;
-    margin: 0 auto;
-}
-.textWeather{
-    font: 0.875rem "OpenSans-Regular", sans-serif;
-    margin-left: 10px;
-}
-.weather_icon{
-    margin: 0 auto 10px auto;
-}
-input[type="text"] {
-    border: 1px solid #444;
-    padding: 2px;
-    border: none;
-}
-
-.citysNamesList{
-    margin-top: 0;
-    padding-left: 0;
-    background-color: #fff;
-    Width: 50%;
-}
-.citysNamesList li{
-    list-style-type: none;
-    cursor: pointer;
-}
-.citysNamesList li span{
-    margin-left: 10px;
-}
-.citysNamesList li:hover{
-    background-color: rgba(250, 145, 32, .5); 
-} */
 
 .weather_box {
     display: flex;
@@ -195,8 +88,6 @@ input[type="text"] {
 }
 .wi{
     fill: white;
-    width: 150px;
-    height: 150px;
 }
 .search_box{
     display: none;
@@ -229,6 +120,7 @@ input[type="text"] {
 }
 .city_weather > li:hover{
     background-color: rgba(250, 145, 32, .5);
+    cursor: pointer;
 }
 .cityName_mobile{
     width: 100%;
@@ -250,6 +142,10 @@ input[type="text"] {
     fill: #fff;
     margin-right: 20px;
     cursor: pointer;
+}
+
+.locationsName_mobile{
+    margin-right: 25px;
 }
 
 @media (min-width: 800px){

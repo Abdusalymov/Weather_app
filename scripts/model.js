@@ -1,6 +1,10 @@
 import controller from "./controller";
-const axios = require('axios');
 
+const axios = require('axios');
+const url = "http://api.openweathermap.org/data/2.5/";
+const parameters = "&units=metric&APPID=8da38032d70cd64f1f7c17976c2dd291&lang=ru";
+
+//init application in vk api
 VK.init({
     apiId: 6832878
 });
@@ -23,7 +27,7 @@ const model = {
 
     getCurrentWeather: (location = "Москва") => {
        return axios
-        .get(`http://api.openweathermap.org/data/2.5/weather?q=${location}&units=metric&APPID=8da38032d70cd64f1f7c17976c2dd291&lang=ru`)
+        .get(`${url}weather?q=${location}${parameters}`)
         .then( response => response.data )
         .catch(error => {
             console.log(error);
@@ -61,8 +65,19 @@ const model = {
         }
         return newForecast;
     },
+    
     changeMobileBox: function(){
        return this.toggleMobileBox = !this.toggleMobileBox;
+    },
+    
+    getCurrentWeatherSeveralLocations: () => {
+        return axios
+        .get(`${url}group?id=511196,5202009,536203,1496747,1486209,520555${parameters}`)
+        .then( response => response.data.list )
+        .catch(error => {
+                console.log(error);
+        })
     }
+
 };
 export default model;
