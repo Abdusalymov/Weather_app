@@ -3,6 +3,8 @@ import view from "./view";
 
 const controller = {
 
+    containerID : '',
+
     init: function (locationName) {
         this.callApiForecastWeather(locationName);
         this.callApiCurrentWeather(locationName);
@@ -25,8 +27,9 @@ const controller = {
         })
     },
 
-    conveyCitys: data => {
-        view.showListCitys(data);
+    conveyCitys: function (data){
+        const containerID = this.containerID;
+        view.showListCitys(data, containerID);
     },
 
     hideListCitys: () =>{
@@ -44,6 +47,11 @@ const controller = {
         .then(CurrentWeatherLocations => {
             view.mobileWeatherLocations(CurrentWeatherLocations);
         })
+    },
+
+    callApiListCitys: function (firstLettersNameLocation, inputClassName){
+        this.containerID = inputClassName;
+        model.getListCitys(firstLettersNameLocation);
     }
 };
 export default controller;

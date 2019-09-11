@@ -48,8 +48,10 @@ const model = {
                 if(r.response) {
                     controller.conveyCitys(r.response.items);
                 }
+
             }
         );
+
     },
 
     addRusWeekDay: forecast => {

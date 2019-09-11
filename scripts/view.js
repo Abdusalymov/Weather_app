@@ -4,7 +4,7 @@ const view = {
 
     city: document.querySelector(".city"),
 
-    citysNamesList: document.querySelector(".citysNamesList"),
+    listBox: {},
 
     weatherType: document.querySelector(".weather_type"),
 
@@ -18,7 +18,7 @@ const view = {
                 </span>
 
                 <div class="weather_icon">
-                    <svg class="wi">
+                    <svg class="wi wi_size">
                         <use xlink:href="#${forecast[i].weather.code}" />
                     </svg>
                 </div>
@@ -34,8 +34,9 @@ const view = {
         }
     },
 
-    showListCitys: function(citys){
-        this.citysNamesList.innerHTML = '';
+    showListCitys: function(citys, containerID){
+        this.listBox = document.getElementById(`${containerID}`);
+        this.listBox.innerHTML = '';
         const fragment = document.createDocumentFragment();
         
         citys.forEach(function(item, index, citys) {
@@ -47,12 +48,12 @@ const view = {
             fragment.appendChild(li);
         });
         
-        this.citysNamesList.appendChild(fragment);
-        this.citysNamesList.style.display = "block";
+        this.listBox.appendChild(fragment);
+        this.listBox.style.display = "block";
     },
 
     hideListCitys: function(){
-        this.citysNamesList.style.display = "none";
+        this.listBox.style.display = "none";
         document.querySelector(".cityName").value = "";
     },
 
