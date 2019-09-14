@@ -1,3 +1,4 @@
+
 const view = {
 
     ul: document.getElementById("dayList"),
@@ -5,6 +6,8 @@ const view = {
     city: document.querySelector(".city"),
 
     listBox: {},
+
+    rusLocation: ["Пермь", "Москва", "Санкт-Петербург", "Новосибирск", "Екатеринбург", "Нижний-Новгород"],
 
     weatherType: document.querySelector(".weather_type"),
 
@@ -34,6 +37,12 @@ const view = {
         }
     },
 
+    showCurrentWeather: function({main, weather}, cityName="Москва"){
+        this.city.innerHTML = cityName.toUpperCase();
+        this.tempToday.innerHTML = Math.round(main.temp) +"&#176;";
+        this.weatherType.innerHTML = weather[0].description;
+    },
+
     showListCitys: function(citys, containerID){
         this.listBox = document.getElementById(`${containerID}`);
         this.listBox.innerHTML = '';
@@ -45,6 +54,7 @@ const view = {
             const text = document.createTextNode(item.title);
             span.appendChild(text);
             li.appendChild(span)
+            li.classList.add(`${containerID}_js`)
             fragment.appendChild(li);
         });
         
@@ -54,26 +64,23 @@ const view = {
 
     hideListCitys: function(){
         this.listBox.style.display = "none";
-        document.querySelector(".cityName").value = "";
-    },
-
-    showCurrentWeather: function({main, weather}, cityName="Москва"){
-        this.city.innerHTML = cityName.toUpperCase();
-        this.tempToday.innerHTML = Math.round(main.temp) +"&#176;";
-        this.weatherType.innerHTML = weather[0].description;
+        document.querySelector(`.${this.listBox.id}`).value = "";
     },
 
     closeOpenMobileBox: function(stateBox){
         document.querySelector(".search_box_mobile").style.display = stateBox ? "block" : "none";
     },
-    mobileWeatherLocations: (weather) => {
+    
+    mobileWeatherLocations: function (weather) {
         const city_weather = document.querySelector(".city_weather");
-
+        city_weather.innerHTML = ""
         weather.forEach((item, index, weather) => {
             const li = document.createElement("li");
             const temperature = Math.round(weather[index].main.temp);
             const iconID = weather[index].weather[0].id;
-            const locationName = weather[index].name;
+            const locationName = this.rusLocation[index];
+            // const locationName = weather[index].name;
+
 
             li.innerHTML = `
                 <span class="locationsName_mobile">${locationName}</span> 
@@ -84,5 +91,5 @@ const view = {
         });
     }
 };
-
 export default view;
+ 

@@ -1,7 +1,7 @@
 import controller from "./controller";
 
 const axios = require('axios');
-const url = "http://api.openweathermap.org/data/2.5/";
+const url = "https://api.openweathermap.org/data/2.5/";
 const parameters = "&units=metric&APPID=8da38032d70cd64f1f7c17976c2dd291&lang=ru";
 
 //init application in vk api

@@ -117,126 +117,7 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   }
 
   return newRequire;
-})({"scripts/view.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-var view = {
-  ul: document.getElementById("dayList"),
-  city: document.querySelector(".city"),
-  listBox: {},
-  weatherType: document.querySelector(".weather_type"),
-  tempToday: document.querySelector(".tempToday"),
-  showForecast: function showForecast(forecast) {
-    for (var i = 0; i < this.ul.children.length; i++) {
-      this.ul.children[i].innerHTML = "\n                <span class=\"day\">\n                    ".concat(forecast[i].dayWeek, "\n                </span>\n\n                <div class=\"weather_icon\">\n                    <svg class=\"wi wi_size\">\n                        <use xlink:href=\"#").concat(forecast[i].weather.code, "\" />\n                    </svg>\n                </div>\n                \n                <span class=\"temperature\">\n                    ").concat(forecast[i].min_temp, "&#176;/").concat(forecast[i].max_temp, "&#176;\n                </span>\n\n                <span class=\"textWeather\">\n                    ").concat(forecast[i].weather.description, "\n                </span>\n            ");
-    }
-  },
-  showListCitys: function showListCitys(citys, containerID) {
-    this.listBox = document.getElementById("".concat(containerID));
-    this.listBox.innerHTML = '';
-    var fragment = document.createDocumentFragment();
-    citys.forEach(function (item, index, citys) {
-      var li = document.createElement("li");
-      var span = document.createElement("span");
-      var text = document.createTextNode(item.title);
-      span.appendChild(text);
-      li.appendChild(span);
-      fragment.appendChild(li);
-    });
-    this.listBox.appendChild(fragment);
-    this.listBox.style.display = "block";
-  },
-  hideListCitys: function hideListCitys() {
-    this.listBox.style.display = "none";
-    document.querySelector(".cityName").value = "";
-  },
-  showCurrentWeather: function showCurrentWeather(_ref) {
-    var main = _ref.main,
-        weather = _ref.weather;
-    var cityName = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "Москва";
-    this.city.innerHTML = cityName.toUpperCase();
-    this.tempToday.innerHTML = Math.round(main.temp) + "&#176;";
-    this.weatherType.innerHTML = weather[0].description;
-  },
-  closeOpenMobileBox: function closeOpenMobileBox(stateBox) {
-    document.querySelector(".search_box_mobile").style.display = stateBox ? "block" : "none";
-  },
-  mobileWeatherLocations: function mobileWeatherLocations(weather) {
-    var city_weather = document.querySelector(".city_weather");
-    weather.forEach(function (item, index, weather) {
-      var li = document.createElement("li");
-      var temperature = Math.round(weather[index].main.temp);
-      var iconID = weather[index].weather[0].id;
-      var locationName = weather[index].name;
-      li.innerHTML = "\n                <span class=\"locationsName_mobile\">".concat(locationName, "</span> \n                <i class=\"wi wi-owm-").concat(iconID, "\"></i>\n                <span>").concat(temperature, "</span> \n            ");
-      city_weather.appendChild(li);
-    });
-  }
-};
-var _default = view;
-exports.default = _default;
-},{}],"scripts/controller.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _model = _interopRequireDefault(require("./model"));
-
-var _view = _interopRequireDefault(require("./view"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var controller = {
-  containerID: '',
-  init: function init(locationName) {
-    this.callApiForecastWeather(locationName);
-    this.callApiCurrentWeather(locationName);
-    this.showCurrentWeatherSeveralLocation();
-  },
-  callApiForecastWeather: function callApiForecastWeather(location) {
-    _model.default.getForcastWeather(location).then(function (forecast) {
-      _view.default.showForecast(forecast);
-    });
-  },
-  callApiCurrentWeather: function callApiCurrentWeather(location) {
-    _model.default.getCurrentWeather(location).then(function (data) {
-      _view.default.showCurrentWeather(data, location);
-    });
-  },
-  conveyCitys: function conveyCitys(data) {
-    var containerID = this.containerID;
-
-    _view.default.showListCitys(data, containerID);
-  },
-  hideListCitys: function hideListCitys() {
-    _view.default.hideListCitys();
-  },
-  toggleMobileSearchBox: function toggleMobileSearchBox() {
-    var toggleState = _model.default.changeMobileBox();
-
-    _view.default.closeOpenMobileBox(toggleState);
-  },
-  showCurrentWeatherSeveralLocation: function showCurrentWeatherSeveralLocation() {
-    _model.default.getCurrentWeatherSeveralLocations().then(function (CurrentWeatherLocations) {
-      _view.default.mobileWeatherLocations(CurrentWeatherLocations);
-    });
-  },
-  callApiListCitys: function callApiListCitys(firstLettersNameLocation, inputClassName) {
-    this.containerID = inputClassName;
-
-    _model.default.getListCitys(firstLettersNameLocation);
-  }
-};
-var _default = controller;
-exports.default = _default;
-},{"./model":"scripts/model.js","./view":"scripts/view.js"}],"node_modules/axios/lib/helpers/bind.js":[function(require,module,exports) {
+})({"node_modules/axios/lib/helpers/bind.js":[function(require,module,exports) {
 'use strict';
 
 module.exports = function bind(fn, thisArg) {
@@ -1965,7 +1846,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 var axios = require('axios');
 
-var url = "http://api.openweathermap.org/data/2.5/";
+var url = "https://api.openweathermap.org/data/2.5/";
 var parameters = "&units=metric&APPID=8da38032d70cd64f1f7c17976c2dd291&lang=ru"; //init application in vk api
 
 VK.init({
@@ -2030,20 +1911,144 @@ var model = {
 };
 var _default = model;
 exports.default = _default;
-},{"./controller":"scripts/controller.js","axios":"node_modules/axios/index.js"}],"index.js":[function(require,module,exports) {
+},{"./controller":"scripts/controller.js","axios":"node_modules/axios/index.js"}],"scripts/view.js":[function(require,module,exports) {
 "use strict";
 
-var _model = _interopRequireDefault(require("./scripts/model"));
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+var view = {
+  ul: document.getElementById("dayList"),
+  city: document.querySelector(".city"),
+  listBox: {},
+  rusLocation: ["Пермь", "Москва", "Санкт-Петербург", "Новосибирск", "Екатеринбург", "Нижний-Новгород"],
+  weatherType: document.querySelector(".weather_type"),
+  tempToday: document.querySelector(".tempToday"),
+  showForecast: function showForecast(forecast) {
+    for (var i = 0; i < this.ul.children.length; i++) {
+      this.ul.children[i].innerHTML = "\n                <span class=\"day\">\n                    ".concat(forecast[i].dayWeek, "\n                </span>\n\n                <div class=\"weather_icon\">\n                    <svg class=\"wi wi_size\">\n                        <use xlink:href=\"#").concat(forecast[i].weather.code, "\" />\n                    </svg>\n                </div>\n                \n                <span class=\"temperature\">\n                    ").concat(forecast[i].min_temp, "&#176;/").concat(forecast[i].max_temp, "&#176;\n                </span>\n\n                <span class=\"textWeather\">\n                    ").concat(forecast[i].weather.description, "\n                </span>\n            ");
+    }
+  },
+  showCurrentWeather: function showCurrentWeather(_ref) {
+    var main = _ref.main,
+        weather = _ref.weather;
+    var cityName = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "Москва";
+    this.city.innerHTML = cityName.toUpperCase();
+    this.tempToday.innerHTML = Math.round(main.temp) + "&#176;";
+    this.weatherType.innerHTML = weather[0].description;
+  },
+  showListCitys: function showListCitys(citys, containerID) {
+    this.listBox = document.getElementById("".concat(containerID));
+    this.listBox.innerHTML = '';
+    var fragment = document.createDocumentFragment();
+    citys.forEach(function (item, index, citys) {
+      var li = document.createElement("li");
+      var span = document.createElement("span");
+      var text = document.createTextNode(item.title);
+      span.appendChild(text);
+      li.appendChild(span);
+      li.classList.add("".concat(containerID, "_js"));
+      fragment.appendChild(li);
+    });
+    this.listBox.appendChild(fragment);
+    this.listBox.style.display = "block";
+  },
+  hideListCitys: function hideListCitys() {
+    this.listBox.style.display = "none";
+    document.querySelector(".".concat(this.listBox.id)).value = "";
+  },
+  closeOpenMobileBox: function closeOpenMobileBox(stateBox) {
+    document.querySelector(".search_box_mobile").style.display = stateBox ? "block" : "none";
+  },
+  mobileWeatherLocations: function mobileWeatherLocations(weather) {
+    var _this = this;
+
+    var city_weather = document.querySelector(".city_weather");
+    city_weather.innerHTML = "";
+    weather.forEach(function (item, index, weather) {
+      var li = document.createElement("li");
+      var temperature = Math.round(weather[index].main.temp);
+      var iconID = weather[index].weather[0].id;
+      var locationName = _this.rusLocation[index]; // const locationName = weather[index].name;
+
+      li.innerHTML = "\n                <span class=\"locationsName_mobile\">".concat(locationName, "</span> \n                <i class=\"wi wi-owm-").concat(iconID, "\"></i>\n                <span>").concat(temperature, "</span> \n            ");
+      city_weather.appendChild(li);
+    });
+  }
+};
+var _default = view;
+exports.default = _default;
+},{}],"scripts/controller.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _model = _interopRequireDefault(require("./model"));
+
+var _view = _interopRequireDefault(require("./view"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var controller = {
+  containerID: '',
+  init: function init(locationName) {
+    this.callApiForecastWeather(locationName);
+    this.callApiCurrentWeather(locationName);
+    this.showCurrentWeatherSeveralLocation();
+  },
+  callApiForecastWeather: function callApiForecastWeather(location) {
+    _model.default.getForcastWeather(location).then(function (forecast) {
+      _view.default.showForecast(forecast);
+    });
+  },
+  callApiCurrentWeather: function callApiCurrentWeather(location) {
+    _model.default.getCurrentWeather(location).then(function (data) {
+      _view.default.showCurrentWeather(data, location);
+    });
+  },
+  conveyCitys: function conveyCitys(data) {
+    var containerID = this.containerID;
+
+    _view.default.showListCitys(data, containerID);
+  },
+  hideListCitys: function hideListCitys() {
+    _view.default.hideListCitys();
+  },
+  toggleMobileSearchBox: function toggleMobileSearchBox() {
+    var toggleState = _model.default.changeMobileBox();
+
+    _view.default.closeOpenMobileBox(toggleState);
+  },
+  showCurrentWeatherSeveralLocation: function showCurrentWeatherSeveralLocation() {
+    _model.default.getCurrentWeatherSeveralLocations().then(function (CurrentWeatherLocations) {
+      _view.default.mobileWeatherLocations(CurrentWeatherLocations);
+    });
+  },
+  callApiListCitys: function callApiListCitys(firstLettersNameLocation, inputClassName) {
+    this.containerID = inputClassName;
+
+    _model.default.getListCitys(firstLettersNameLocation);
+  }
+};
+var _default = controller;
+exports.default = _default;
+},{"./model":"scripts/model.js","./view":"scripts/view.js"}],"index.js":[function(require,module,exports) {
+"use strict";
 
 var _controller = _interopRequireDefault(require("./scripts/controller"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+// import model from "./scripts/model";
 // import "./main.scss";
-var axios = require('axios');
-
+// const axios = require('axios');
 var body = document.querySelector('body');
 var citysNamesList = document.querySelector('.citysNamesList');
+var citysNamesList_mobile = document.querySelector('.citysNamesList_mobile');
 
 _controller.default.init(); //get name location from input
 
@@ -2061,20 +2066,30 @@ body.addEventListener('input', function (_ref) {
 body.addEventListener('click', function (_ref2) {
   var target = _ref2.target;
 
-  if (target.className === "touch_box_mobile" || target.className.baseVal === "close_icon") {
+  if (target.className === "touch_box_mobile") {
     _controller.default.toggleMobileSearchBox();
   }
 }); //select a city from the drop-down list on click
 
-citysNamesList.addEventListener("click", function (_ref3) {
+citysNamesList.addEventListener("click", hideList);
+citysNamesList_mobile.addEventListener("click", function (_ref3) {
   var target = _ref3.target;
+
+  _controller.default.toggleMobileSearchBox();
+
+  hideList(event);
+});
+
+function hideList(_ref4) {
+  var target = _ref4.target;
+  console.log(target);
   var locationName = target.textContent;
 
   _controller.default.init(locationName);
 
   _controller.default.hideListCitys();
-});
-},{"./scripts/model":"scripts/model.js","./scripts/controller":"scripts/controller.js","axios":"node_modules/axios/index.js"}],"../../../../usr/local/lib/node_modules/parcel/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+}
+},{"./scripts/controller":"scripts/controller.js"}],"../../../../usr/local/lib/node_modules/parcel/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -2102,7 +2117,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "36803" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "38497" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

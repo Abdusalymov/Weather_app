@@ -103,7 +103,7 @@ body{
 .locations_search_box{
     width: 100%;
     background-color: #1335a8;
-    height: 100%;
+    height: 100vh;
     position: fixed;
     top: 0;
     bottom: 0;
@@ -162,6 +162,25 @@ body{
     margin-right: 25px;
 }
 
+.citysNamesList_mobile{
+    list-style-type: none;
+    position: relative;
+    background: #fff;
+    padding-left: 0;
+    width: 100%;
+}
+.citysNamesList_mobile li{
+    list-style-type: none;
+    cursor: pointer;
+}
+.citysNamesList_mobile li span{
+    margin: 0 10px;
+    font: 1rem "OpenSans-Regular", sans-serif;
+}
+.citysNamesList_mobile li:hover{
+    background-color: rgba(250, 145, 32, .5); 
+}
+
 @media (min-width: 800px){
     :root{
         font-size: 1em;
@@ -195,8 +214,8 @@ body{
     .citysNamesList{
         position: relative;
         background: #fff;
-        list-style-type: none;
         padding-left: 0;
+        width: 100%;
     }
     .citysNamesList li{
         list-style-type: none;
@@ -204,10 +223,12 @@ body{
     }
     .citysNamesList li span{
         margin: 0 10px;
+        font: 1.2rem "OpenSans-Regular", sans-serif;
     }
     .citysNamesList li:hover{
         background-color: rgba(250, 145, 32, .5); 
-    } 
+    }
+
     #dayList{
         display: flex;
         justify-content: space-around;

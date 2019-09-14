@@ -1,10 +1,13 @@
-import model from "./scripts/model";
+// import model from "./scripts/model";
 import controller from "./scripts/controller";
 // import "./main.scss";
-const axios = require('axios');
+// const axios = require('axios');
+
 
 const body = document.querySelector('body');
 const citysNamesList = document.querySelector('.citysNamesList');
+const citysNamesList_mobile = document.querySelector('.citysNamesList_mobile');
+
 
 controller.init();
 
@@ -20,14 +23,21 @@ body.addEventListener('input', ({ target }) => {
 
 //open/close side mobile menu on click
  body.addEventListener('click', ({ target }) => {
-  if(target.className === "touch_box_mobile" || target.className.baseVal === "close_icon"){
+  if(target.className === "touch_box_mobile"){
         controller.toggleMobileSearchBox();
     }
 });
 
 //select a city from the drop-down list on click
-citysNamesList.addEventListener("click", ({ target })=>{
+citysNamesList.addEventListener("click", hideList);
+citysNamesList_mobile.addEventListener("click", ({target}) => {
+    controller.toggleMobileSearchBox();
+    hideList(event);
+});
+
+function hideList ({target}){
+    console.log(target)
     const locationName = target.textContent;
     controller.init(locationName);
     controller.hideListCitys();
-});
+}
