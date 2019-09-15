@@ -1922,7 +1922,7 @@ var view = {
   ul: document.getElementById("dayList"),
   city: document.querySelector(".city"),
   listBox: {},
-  rusLocation: ["Пермь", "Москва", "Санкт-Петербург", "Новосибирск", "Екатеринбург", "Нижний-Новгород"],
+  rusLocations: ["Пермь", "Москва", "Санкт-Петербург", "Новосибирск", "Екатеринбург", "Нижний Новгород"],
   weatherType: document.querySelector(".weather_type"),
   tempToday: document.querySelector(".tempToday"),
   showForecast: function showForecast(forecast) {
@@ -1970,9 +1970,8 @@ var view = {
       var li = document.createElement("li");
       var temperature = Math.round(weather[index].main.temp);
       var iconID = weather[index].weather[0].id;
-      var locationName = _this.rusLocation[index]; // const locationName = weather[index].name;
-
-      li.innerHTML = "\n                <span class=\"locationsName_mobile\">".concat(locationName, "</span> \n                <i class=\"wi wi-owm-").concat(iconID, "\"></i>\n                <span>").concat(temperature, "</span> \n            ");
+      var locationName = _this.rusLocations[index];
+      li.innerHTML = "\n                <span class=\"locationsName_mobile\">".concat(locationName, "</span> \n                <i class=\"wi wi-owm-").concat(iconID, "\"></i>\n                <span>").concat(temperature, "</span> \n                <span id=\"").concat(locationName, "\" class=\"touch_box\" ></span>    \n            ");
       city_weather.appendChild(li);
     });
   }
@@ -2049,6 +2048,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var body = document.querySelector('body');
 var citysNamesList = document.querySelector('.citysNamesList');
 var citysNamesList_mobile = document.querySelector('.citysNamesList_mobile');
+var city_weather = document.querySelector('.city_weather');
 
 _controller.default.init(); //get name location from input
 
@@ -2088,7 +2088,17 @@ function hideList(_ref4) {
   _controller.default.init(locationName);
 
   _controller.default.hideListCitys();
-}
+} //select a city from the side-bar for mobile
+
+
+city_weather.addEventListener("click", function (_ref5) {
+  var target = _ref5.target;
+  console.log(target.id);
+
+  _controller.default.init(target.id);
+
+  _controller.default.toggleMobileSearchBox();
+});
 },{"./scripts/controller":"scripts/controller.js"}],"../../../../usr/local/lib/node_modules/parcel/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
@@ -2117,7 +2127,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "38497" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "33385" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

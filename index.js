@@ -1,13 +1,9 @@
-// import model from "./scripts/model";
 import controller from "./scripts/controller";
-// import "./main.scss";
-// const axios = require('axios');
-
 
 const body = document.querySelector('body');
 const citysNamesList = document.querySelector('.citysNamesList');
 const citysNamesList_mobile = document.querySelector('.citysNamesList_mobile');
-
+const city_weather = document.querySelector('.city_weather');
 
 controller.init();
 
@@ -34,10 +30,16 @@ citysNamesList_mobile.addEventListener("click", ({target}) => {
     controller.toggleMobileSearchBox();
     hideList(event);
 });
-
 function hideList ({target}){
     console.log(target)
     const locationName = target.textContent;
     controller.init(locationName);
     controller.hideListCitys();
 }
+
+//select a city from the side-bar for mobile
+city_weather.addEventListener("click", ({target}) => {
+    console.log(target.id);
+    controller.init(target.id)
+    controller.toggleMobileSearchBox();
+});

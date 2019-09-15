@@ -7,7 +7,7 @@ const view = {
 
     listBox: {},
 
-    rusLocation: ["Пермь", "Москва", "Санкт-Петербург", "Новосибирск", "Екатеринбург", "Нижний-Новгород"],
+    rusLocations: ["Пермь", "Москва", "Санкт-Петербург", "Новосибирск", "Екатеринбург", "Нижний Новгород"],
 
     weatherType: document.querySelector(".weather_type"),
 
@@ -78,14 +78,13 @@ const view = {
             const li = document.createElement("li");
             const temperature = Math.round(weather[index].main.temp);
             const iconID = weather[index].weather[0].id;
-            const locationName = this.rusLocation[index];
-            // const locationName = weather[index].name;
-
+            const locationName = this.rusLocations[index];
 
             li.innerHTML = `
                 <span class="locationsName_mobile">${locationName}</span> 
                 <i class="wi wi-owm-${iconID}"></i>
                 <span>${temperature}</span> 
+                <span id="${locationName}" class="touch_box" ></span>    
             `
             city_weather.appendChild(li);  
         });
