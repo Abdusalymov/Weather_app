@@ -21,7 +21,7 @@ const view = {
                 </span>
 
                 <div class="weather_icon">
-                    <svg class="wi wi_size">
+                    <svg xmlns:xlink="http://www.w3.org/1999/xlink" class="wi wi_size">
                         <use xlink:href="#${forecast[i].weather.code}" />
                     </svg>
                 </div>

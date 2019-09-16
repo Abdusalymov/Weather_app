@@ -1,18 +1,18 @@
 @font-face { 
     font-family: "OpenSans-ExtraBold";
-    src: url(fonts/OpenSans-ExtraBold.ttf) format("truetype"); 
+    src: url(./fonts/OpenSans-ExtraBold.ttf) format("truetype"); 
 }
 @font-face { 
     font-family: "OpenSans-Light";
-    src: url(fonts/OpenSans-Light.ttf) format("truetype"); 
+    src: url(./fonts/OpenSans-Light.ttf) format("truetype"); 
 }
 @font-face { 
     font-family: "OpenSans-Regular";
-    src: url(fonts/OpenSans-Regular.ttf) format("truetype"); 
+    src: url(./fonts/OpenSans-Regular.ttf) format("truetype"); 
 }
 @font-face { 
-    font-family: "OpenSans-SemiBoldOpenSans-SemiBold";
-    src: url(fonts/OpenSans-SemiBold.ttf) format("truetype"); 
+    font-family: "OpenSans-SemiBold";
+    src: url(./fonts/OpenSans-SemiBold.ttf) format("truetype"); 
 }
 
 :root{

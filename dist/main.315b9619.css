@@ -1,18 +1,18 @@
 @font-face { 
     font-family: "OpenSans-ExtraBold";
-    src: url(/OpenSans-ExtraBold.716560ac.ttf) format("truetype"); 
+    src: url(./OpenSans-ExtraBold.a8e8ffb1.ttf) format("truetype"); 
 }
 @font-face { 
     font-family: "OpenSans-Light";
-    src: url(/OpenSans-Light.8e8a69fc.ttf) format("truetype"); 
+    src: url(./OpenSans-Light.b2371b83.ttf) format("truetype"); 
 }
 @font-face { 
     font-family: "OpenSans-Regular";
-    src: url(/OpenSans-Regular.4f32e784.ttf) format("truetype"); 
+    src: url(./OpenSans-Regular.45f796b6.ttf) format("truetype"); 
 }
 @font-face { 
-    font-family: "OpenSans-SemiBoldOpenSans-SemiBold";
-    src: url(/OpenSans-SemiBold.492874b3.ttf) format("truetype"); 
+    font-family: "OpenSans-SemiBold";
+    src: url(./OpenSans-SemiBold.d363250f.ttf) format("truetype"); 
 }
 
 :root{
@@ -273,4 +273,4 @@ body{
     }
 }
 
-/*# sourceMappingURL=/main.af46ece4.css.map */
+/*# sourceMappingURL=/main.315b9619.css.map */
